@@ -22,7 +22,8 @@ class Restaurant(models.Model):
     address2 = models.CharField(max_length=250)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    logo = models.ImageField(upload_to = 'restro_logo')
+    logo = models.URLField()
+    # logo = models.ImageField(upload_to = 'restro_logo')
 
 
 class Item(models.Model):
@@ -30,7 +31,8 @@ class Item(models.Model):
     rId = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     ItemName = models.CharField(max_length=50)
     Description = models.CharField(max_length=200)
-    Image = models.ImageField(upload_to = 'dishes')
+    Image = models.URLField()
+    # Image = models.ImageField(upload_to = 'dishes/')
     price = models.IntegerField()
 
 

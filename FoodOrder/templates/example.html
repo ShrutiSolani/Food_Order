@@ -90,17 +90,17 @@ body {
 
       <div class="rotating-slider" style="transform: rotate(-90deg);  margin-left: 18%;">
         <ul class="slides">
-          <li>
+          <li><div class="inner"></div>
           </li>
-          <li> 
+          <li> <div class="inner" style="color: #fff;">Hi</div>
           </li>
-          <li>
+          <li><div class="inner"></div>
           </li>
-          <li>
+          <li><div class="inner"></div>
           </li>
-          <li>
+          <li><div class="inner"></div>
           </li>
-          <li>
+          <li><div class="inner"></div>
           </li>
         </ul>
       </div>
@@ -127,7 +127,7 @@ body {
           <a href="#"><button>View</button></a>
       </div>
 
-      <div class="card">
+      <!-- <div class="card">
           <img src="{% static 'images/card3.jpg' %}" alt="card3">
           <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
           <a href="#"><button>View</button></a>
@@ -136,7 +136,7 @@ body {
       <div class="card">
         <img src="{% static 'images/card3.jpg' %}" alt="card4">
         <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
-        <a href="#"><button>View</button></a>
+        <a href="#"><button>View</button></a> -->
     </div>
   </div>
 </section>
@@ -174,17 +174,18 @@ body {
   </div>
 
   <div class="box-container">
-
+{% for i in items %}
       <div class="box">
-          <img src="{% static 'images/dish1.jpg' %}" alt="">
+          <img src="{{ i.Image }}" alt="">
           <div class="info">
-              <h3>dish1</h3>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
-              <a href="#"><button>view</button></a>
+              <h3>{{ i.ItemName }}</h3>
+              <p>{{ i.Description }}</p>
+              <a href="#"><button>{{ i.price }}</button></a>
           </div>
       </div>
-
-      <div class="box">
+  {% endfor %}
+    </div>
+      <!-- <div class="box">
           <img src="{% static 'images/dish2.jpg' %}" alt="">
           <div class="info">
               <h3>dish2</h3>
@@ -227,9 +228,9 @@ body {
               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
               <a href="#"><button>view</button></a>
           </div>
-      </div>
+      </div> -->
 
-  </div>
+  
   <a href="#" style="margin-left: 47%;"><button>Add more</button></a>
   <br><br>
 </section>

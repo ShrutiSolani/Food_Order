@@ -55,9 +55,7 @@ $(document).ready(function(){
   
   $(".qt-plus").click(function(){
     $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1);
-    
     $(this).parent().children(".full-price").addClass("added");
-    
     var el = $(this);
     window.setTimeout(function(){el.parent().children(".full-price").removeClass("added"); changeVal(el);}, 150);
   });

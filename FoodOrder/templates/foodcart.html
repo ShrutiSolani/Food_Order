@@ -28,7 +28,7 @@
 
 
 
-    <title>Food Cart</title>
+    <title>Menu</title>
 </head>
 <body>
     <header id="site-header">
@@ -40,10 +40,13 @@
       <div class="container">
     
         <section id="cart"> 
+          {% for i in items %}
+          <form action="{% url 'project_app:placeorder' %}" method="post">
+            {% csrf_token %}
           <article class="product">
             <header class="header">
               <a class="remove">
-                <img src="{% static 'images/dish1.jpg' %}" alt="">
+                <img src="{{i.Image}}" alt="">
     
                 <h3>Remove Dish</h3>
               </a>
@@ -51,29 +54,47 @@
     
             <div class="content">
     
-              <h1>Lorem ipsum</h1>
+              <h1>{{ i.ItemName }}</h1>
     
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
+              {{ i.Description }}
     
               
             </div>
     
             <footer class="content">
               <span class="qt-minus">-</span>
-              <span class="qt">2</span>
+             <span class="qt" name='qt'>1</span>
               <span class="qt-plus">+</span>
     
               <h2 class="full-price">
-                29.98
+                {{ i.price }}
               </h2>
     
               <h2 class="price">
-                14.99
+                {{ i.price }}
               </h2>
             </footer>
           </article>
-    
-          <article class="product">
+          <footer id="site-footer">
+            <div class="container clearfix">
+        
+              <div class="left">
+                <h2 class="subtotal">Subtotal: ₹ <span>163.96</span></h2>
+                <h3 class="tax">Taxes (5%): ₹ <span>8.2</span></h3>
+                <h3 class="shipping">Delivery Charges: ₹ <span>5.00</span></h3>
+              </div>
+        
+              <div class="right">
+                <h1 class="total">Total: ₹ <span>177.16</span></h1>
+                <button type="submit" class="btn" >Checkout</a>
+              </div>
+        
+            </div>
+            <!-- <input type="number" name="quant" id="" style="display: hidden;"> -->
+          </footer>
+        </form>
+          {% endfor %}
+          <!-- <article class="product">
             <header class="header">
               <a class="remove">
                 <img src="{% static 'images/dish2.jpg' %}" alt="">
@@ -139,28 +160,13 @@
                 17.99
               </h2>
             </footer>
-          </article>
+          </article> -->
     
         </section>
     
       </div>
     
-      <footer id="site-footer">
-        <div class="container clearfix">
-    
-          <div class="left">
-            <h2 class="subtotal">Subtotal: ₹ <span>163.96</span></h2>
-            <h3 class="tax">Taxes (5%): ₹ <span>8.2</span></h3>
-            <h3 class="shipping">Shipping: ₹ <span>5.00</span></h3>
-          </div>
-    
-          <div class="right">
-            <h1 class="total">Total: ₹ <span>177.16</span></h1>
-            <a class="btn">Checkout</a>
-          </div>
-    
-        </div>
-      </footer>
+      
 
 
 

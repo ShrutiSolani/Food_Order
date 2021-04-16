@@ -195,7 +195,7 @@ html {
 
 #special .heading h1 {
   font-size: 4rem;
-  color: #000;
+  /* color: #000; */
   padding-top: 7rem;
   margin-top: 2rem;
   color: #fff;
@@ -366,7 +366,7 @@ html {
 
 #dish .heading h1 {
   font-size: 4rem;
-  color: #000;
+  color: #fff;
   padding-top: 7rem;
   margin-top: 2rem;
 }

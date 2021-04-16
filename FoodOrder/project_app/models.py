@@ -60,3 +60,9 @@ class Review(models.Model):
     review_given = models.CharField(max_length=250)
 
 
+class Contact(models.Model):
+    cId = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    message = models.TextField(max_length=250)
+

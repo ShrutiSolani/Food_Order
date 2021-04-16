@@ -1,0 +1,365 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>jQuery Rotating Slider Plugin Demo</title>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{% static 'css/rotating-slider.css' %}">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Lemonada:wght@300&family=Lobster&display=swap" rel="stylesheet">
+<style>
+body {
+  background: black;
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 300;
+  /* overflow: hidden; */
+}
+
+.rotating-slider ul.slides li { color: #fff }
+
+.rotating-slider ul.slides li:nth-of-type(1) { background: url('{% static 'images/slidedish1.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li:nth-of-type(2)  { background: url('{% static 'images/slidedish2.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li:nth-of-type(3)  { background: url('{% static 'images/slidedish3.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li:nth-of-type(4)  { background: url('{% static 'images/slidedish4.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li:nth-of-type(5)  { background: url('{% static 'images/slidedish5.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li:nth-of-type(6)  { background: url('{% static 'images/slidedish6.jpg' %}'); background-repeat: no-repeat; }
+
+.rotating-slider ul.slides li .inner {
+  box-sizing: border-box;
+  padding: 2em;
+  height: 100%;
+  width: 100%;
+}
+
+</style>
+</head>
+<body translate="no">
+
+ <!-- header section starts -->
+ <header id="header">
+  <nav>
+      <ul>
+          <li><a href="#home">home</a></li>
+          <li><a href="#special">Orders</a></li>
+          <li><a href="#about">Reviews</a></li>
+           <li><a href="#dish">dishes</a></li>
+           <li><a href="#contact">contact</a></li>
+      </ul>
+  </nav>
+
+  <div class="fas fa-hamburger"></div>
+
+  <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" class="logo-png" alt=""></a>
+</header>
+<!-- header section ends -->
+
+<!-- home section starts -->
+
+<section id="home" class="container-fluid">
+
+  <div class="row min-vh-100 align-items-center">
+
+      <div class="col-md-8 ml-md-5 text-md-left  content" style="margin-top: 20%;">
+          <h1>food that you can't <br> resist</h1>
+          <h2>enjoy the marvelous taste</h2>   
+          <a href="#special"><button>get started</button></a>
+      </div>
+
+      <div class="rotating-slider" style="transform: rotate(-90deg);  margin-left: 18%;">
+        <ul class="slides">
+          <li><div class="inner"></div>
+          </li>
+          <li> <div class="inner" style="color: #fff;">Hi</div>
+          </li>
+          <li><div class="inner"></div>
+          </li>
+          <li><div class="inner"></div>
+          </li>
+          <li><div class="inner"></div>
+          </li>
+          <li><div class="inner"></div>
+          </li>
+        </ul>
+      </div>
+  </div>
+</section>
+
+<!-- home section ends -->
+
+<section id="special" class="container-fluid">
+  <div class="heading text-center" style="margin-top: 100px;">
+      <h1>MY<span> ORDERS</span></h1>
+  </div>
+
+  <div class="card-container">
+      <div class="card">
+          <img src="{% static 'images/card1.jpg' %}" alt="card1">
+          <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+          <a href="#"><button>Status</button></a>
+      </div>
+
+      <div class="card">
+          <img src="{% static 'images/card2.jpg' %}" alt="card2">
+          <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+          <a href="#"><button>Status</button></a>
+      </div>
+
+      <!-- <div class="card">
+          <img src="{% static 'images/card3.jpg' %}" alt="card3">
+          <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+          <a href="#"><button>View</button></a>
+      </div>
+
+      <div class="card">
+        <img src="{% static 'images/card3.jpg' %}" alt="card4">
+        <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+        <a href="#"><button>View</button></a> -->
+    </div>
+  </div>
+</section>
+
+
+<!-- about us section starts -->
+<!-- <section id="about" class="container">
+  <div class="heading text-center">
+  <h1 style="color: white;">PROVIDE YOUR<span> REVIEW </span></h1>
+  </div>
+
+  <div class="row min-vh-100">
+
+      <div class="col-md-6 text-center text-md-left align-self-center content" style="margin-left: 20%;">
+        <div style="font-size:10em;  content: '\201C'; display: inline-block;">&#8220;</div>
+          <input type="textarea" style="display: inline-block; margin-left: 55px;" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi recusandae iusto, perferendis earum laboriosam rerum et quisquam iste vel commodi corporis praesentium porro impedit ullam!</p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci iure aliquam illum quaerat quia voluptate.</p>
+          <span style="content: '\201D'; font-size: 10em; display: inline-block;">&#8221;</span>
+      </div>
+
+
+  </div>
+
+</section> -->
+
+<!-- about us section ends -->
+
+
+<!-- dish section starts -->
+
+<section id="dish" class="container">
+
+  <div class="heading text-center">
+      <h1>YOUR <span>Restaurants</span></h1>
+  </div>
+
+  <div class="box-container">
+{% for i in restro %}
+      <div class="box">
+          <img src="{{ i.logo }}" alt="">
+          <div class="info">
+              <h3>{{ i.RestroName }}</h3>
+              <p>{{ i.city }}</p>
+              <a href="{% url 'project_app:cart' i.RId %}"><button>Menu</button></a>
+          </div>
+      </div>
+  {% endfor %}
+    </div>
+      <!-- <div class="box">
+          <img src="{% static 'images/dish2.jpg' %}" alt="">
+          <div class="info">
+              <h3>dish2</h3>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+              <a href="#"><button>view</button></a>
+          </div>
+      </div>
+
+      <div class="box">
+          <img src="{% static 'images/dish3.jpg' %}" alt="">
+          <div class="info">
+              <h3>dish3</h3>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+              <a href="#"><button>view</button></a>
+          </div>
+      </div>
+
+      <div class="box">
+          <img src="{% static 'images/dish4.jpg' %}" alt="">
+          <div class="info">
+              <h3>dish4</h3>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+              <a href="#"><button>view</button></a>
+          </div>
+      </div>
+
+      <div class="box">
+          <img src="{% static 'images/dish5.jpg' %}" alt="">
+          <div class="info">
+              <h3>dish5</h3>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+              <a href="#"><button>view</button></a>
+          </div>
+      </div>
+
+      <div class="box">
+          <img src="{% static 'images/dish6.jpg' %}" alt="">
+          <div class="info">
+              <h3>dish6</h3>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+              <a href="#"><button>view</button></a>
+          </div>
+      </div> -->
+
+  
+  <a href="#" style="margin-left: 47%;"><button>See more</button></a>
+  <br><br>
+</section>
+
+<!-- dish section ends -->
+<!-- Contact section starts -->
+<section id="contact">
+<div id="flex-container">
+  <div id="black1">
+      <h4>LOCATION</h4>
+      <p class="contactpara">Bandra, Mumbai - 400050, Maharashtra</p>
+      <h4>FOLLOW US</h4>
+      <p class="contactpara">
+          <img src="{% static 'images/fb_icon.png' %}" alt="" class="contactimg">
+          <img src="{% static 'images/insta.png' %}" alt="" class="contactimg">
+          <img src="{% static 'images/iconfinder_BW_Twitter_4_glyph_svg_5305171.png' %}" alt="" class="contactimg" style="background-color: white;">
+          <img src="{% static 'images/1071017-24.png' %}" alt="" class="contactimg">
+      </p>
+      
+      <p class="contactpara">&copy; 2021 Privacy Policy</p>
+  </div>
+  <div id="gradient"> 
+      <div id="yellow">
+          <h1 id ="contacthead">CONTACT FORM</h1> 
+          <form action="">
+              <input type="text" name="" id="" placeholder="Enter your Name">
+              <input type="text" name="" id="" placeholder="Enter a valid email address">
+              <input type="text" name="" id="" placeholder="Enter your message">
+              <button type="submit">Submit</button>
+          </form>
+      </div>
+      <div id="black2"></div>
+  </div>
+</div>
+</section>
+
+
+<!-- Contact section ends -->
+<section>
+<!-- <div class="rotating-slider" style="transform: rotate(-90deg); margin-left: 50%;">
+  <ul class="slides">
+    <li>
+      <div class="inner">
+      </div>
+    </li>
+    <li>
+      <div class="inner"></div>
+    </li>
+    <li>
+      <div class="inner"></div>
+    </li>
+    <li>
+      <div class="inner"> </div>
+    </li>
+    <li>
+      <div class="inner"></div>
+    </li>
+    <li>
+      <div class="inner"></div>
+    </li>
+  </ul>
+</div> -->
+</section>
+<!-- script part start -->
+
+<script>
+
+  $(document).ready(function(){
+
+      $('.fa-hamburger').click(function(){
+          $(this).toggleClass('fa-times');
+          $('nav').toggleClass('nav-toggle');
+      });
+
+      $('nav ul li a').click(function(){
+
+          $('.fa-hamburger').removeClass('fa-times');
+          $('nav').removeClass('nav-toggle');
+
+      });
+
+      // $('.dot1').click(function(){
+
+      //     $('.vid1').css('display','block');
+      //     $('.vid2').css('display','none');
+      //     $('.vid3').css('display','none');
+      // });
+
+      // $('.dot2').click(function(){
+
+      //     $('.vid1').css('display','none');
+      //     $('.vid2').css('display','block');
+      //     $('.vid3').css('display','none');
+      // });
+
+      // $('.dot3').click(function(){
+
+      //     $('.vid1').css('display','none');
+      //     $('.vid2').css('display','none');
+      //     $('.vid3').css('display','block');
+      // });
+
+      $(window).on('scroll load',function(){
+          if($(window).scrollTop()>10){
+              $('#header').addClass('header-active');
+          }
+          else{
+
+              $('#header').removeClass('header-active');
+          }
+      });
+      
+
+
+  });
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<script src="{% static 'js/jquery.rotating-slider.js' %}"></script> 
+<script>
+$(function(){ 
+    $('.rotating-slider').rotatingSlider({
+      autoRotate: true,
+      autoRotateInterval: 3000,
+      slideHeight : Math.min(360, window.innerWidth -80),
+		slideWidth : Math.min(480, window.innerWidth - 80),
+	});
+});
+    </script>
+</body>
+</html>

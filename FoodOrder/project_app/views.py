@@ -4,6 +4,8 @@ from .models import *
 from django.contrib.auth.models import *
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def index(request):
@@ -49,7 +51,9 @@ def Ulogin(request):
         print(user)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'example.html')
+            restrolist = Restaurant.objects.filter()
+            request.session["uid_save"] = user.id
+            return render(request, 'userhome.html', {'restro': restrolist})
         else:
             messages.info(request, 'Invalid Credentials !')
             return render(request, 'registerUser.html')
@@ -118,6 +122,7 @@ def Rlogin(request):
         messages.info(request, 'Invalid Method !')
         return redirect('project_app:restro')
 
+
 def menu(request):
     return render(request, 'menu.html')
 
@@ -143,3 +148,53 @@ def addItem(request):
     else:
         messages.info(request, 'Invalid Method !')
         return redirect('/menu')
+
+
+def showcart(request, rid):
+    # if "uid_save" in request.session:
+    #         uid_save_item = request.session["uid_save"]
+
+    #     u_id = Restaurant.objects.only("RId").get(RId = rid_save_item)
+    items = Item.objects.filter(rId = rid)
+    print(rid)
+    print(type(rid))
+    request.session["rid_cart"] = rid
+    return render(request, 'foodcart.html', {'items':items})
+
+
+def placeorder(request):
+    if "uid_save" in request.session:
+            uid_save_item = request.session["uid_save"]
+
+    if "rid_cart" in request.session:
+            riD = request.session["rid_cart"]
+
+    if request.method == 'POST':
+        quant = request.method.get('qt')
+
+    print(riD)
+    print(type(riD))
+    uId = RestroUser.objects.only("id").get(id= uid_save_item)
+    rId = Restaurant.objects.only("RId").get(RId = riD)
+    itemId = Item.objects.only("ItemId").get(ItemId = item)
+    quantity = quant
+    amount = Item.objects.only("price").get(ItemId = item) * quant
+
+    order = Order(uId = uId, rId = rId, itemId = itemId, quantity = quantity, amount = amount)
+    order.save()
+    messages.info("Order places successfully")
+    restrolist = Restaurant.objects.filter()
+    return render(request, 'userhome.html', {'restro': restrolist})
+
+
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        mess = request.POST.get('message')
+
+        send_mail('Contact Form', mess, settings.EMAIL_HOST_USER, [email id], fail_silently=False)
+
+    return redirect('index')
+
+    

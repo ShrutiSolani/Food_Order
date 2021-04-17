@@ -19,7 +19,7 @@ urlpatterns = [
     path('menu/', views.menu, name='Menu'),
     path('additem/', views.addItem, name='additem'),
     path('showmenu/<int:rid>/', views.showcart, name='cart' ),
-    path('placeorder/', views.placeorder, name='placeorder'),
+    path('placeorder/<int:item>/', views.placeorder, name='placeorder'),
     path('contact/', views.contact, name='contact'),
 
 ]

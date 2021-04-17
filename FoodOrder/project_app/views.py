@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.conf import settings
+from collections import Counter
 
 # Create your views here.
 def index(request):
@@ -45,10 +46,10 @@ def Ulogin(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username)
-        print(password)
+        # print(username)
+        # print(password)
         user = RestroUser.objects.get(username = username, password = password)
-        print(user)
+        # print(user)
         if user is not None:
             auth.login(request, user)
             restrolist = Restaurant.objects.filter()
@@ -108,10 +109,10 @@ def Rlogin(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = Restaurant.objects.get(email = email, password = password)
-        print(user)
+        # print(user)
         if user is not None:
             rId = user.RId
-            print(rId)
+            # print(rId)
             # rId = Restaurant.objects.only('RId').get(email=email)
             request.session["rid_save"] = rId
             return render(request, 'example.html')
@@ -156,32 +157,49 @@ def showcart(request, rid):
 
     #     u_id = Restaurant.objects.only("RId").get(RId = rid_save_item)
     items = Item.objects.filter(rId = rid)
-    print(rid)
-    print(type(rid))
+    # print(rid)
+    # print(type(rid))
     request.session["rid_cart"] = rid
-    return render(request, 'foodcart.html', {'items':items})
+    return render(request, 'cart2.html', {'items': items})
 
 
-def placeorder(request):
+def set_cookie(request):
+    if "rid_cart" in request.session:
+        rid = request.session["rid_cart"]
+    items = Item.objects.filter(rId = rid)
+    response = render(request, 'cart2.html', {'items': items})
+
+def placeorder(request, item):
+    print('in placeorder')
     if "uid_save" in request.session:
             uid_save_item = request.session["uid_save"]
 
     if "rid_cart" in request.session:
             riD = request.session["rid_cart"]
 
-    if request.method == 'POST':
-        quant = request.method.get('qt')
-
-    print(riD)
-    print(type(riD))
+    # if request.method == 'POST':
+    #     quant = request.POST.get('quant')
+    quant = request.COOKIES
+    print('quant ',quant)
+    cart = dict(Counter(quant))
+    print("cart - ",cart)
+    for x,y in cart.items():
+        print("x - ",x)
+        print("y - ",y)
+        print("q - ",int(y))
+    # print(riD)
+    # print(type(riD))
     uId = RestroUser.objects.only("id").get(id= uid_save_item)
     rId = Restaurant.objects.only("RId").get(RId = riD)
     itemId = Item.objects.only("ItemId").get(ItemId = item)
-    quantity = quant
-    amount = Item.objects.only("price").get(ItemId = item) * quant
+    # quantity = quant
+    # print(itemId.price)
+    # print(type(itemId.price))
+    amount = itemId.price*quant
 
-    order = Order(uId = uId, rId = rId, itemId = itemId, quantity = quantity, amount = amount)
-    order.save()
+    # order = Order(uId = uId, rId = rId, itemId = itemId, quantity = quantity, amount = amount)
+    # order.save()
+    print(' order saved ')
     messages.info("Order places successfully")
     restrolist = Restaurant.objects.filter()
     return render(request, 'userhome.html', {'restro': restrolist})
@@ -193,7 +211,7 @@ def contact(request):
         email = request.POST.get('email')
         mess = request.POST.get('message')
 
-        send_mail('Contact Form', mess, settings.EMAIL_HOST_USER, [email id], fail_silently=False)
+        # send_mail('Contact Form', mess, settings.EMAIL_HOST_USER, [email id], fail_silently=False)
 
     return redirect('index')
 

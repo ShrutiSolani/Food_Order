@@ -66,3 +66,6 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField(max_length=250)
 
+# class TotalOrder(models.Model):
+#     toid = models.AutoField(primary_key=True)
+#     itemslist = models.

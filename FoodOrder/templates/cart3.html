@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Lemonada:wght@300&family=Lobster&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'css/cart2.css' %}">
+   
+
+
+
+    <title>Food Cart</title>
+</head>
+<body>
+    <header id="site-header">
+        <div class="container">
+          <h1>Shopping cart</h1>
+        </div>
+      </header>
+    
+      <div class="container">
+    
+        <section id="cart"> 
+            {% for i in items %}
+            <form action="{% url 'project_app:placeorder' item=i.ItemId %}" method="post" id="your_form" enctype="multipart/form-data">
+                {% csrf_token %}
+          <article class="product">
+            <header class="header">
+              <a class="remove">
+                <img src="{{ i.Image }}" alt="">
+    
+                <h3>Remove Dish</h3>
+              </a>
+            </header>
+
+            <!-- INPUT WALA JUGAD -->
+            <!-- <input type="number" class="qt-input" name='quant' id='quant'> -->
+    
+            <div class="content">
+    
+              <h1>{{ i.ItemName }}</h1>
+
+              {{ i.Description }}
+
+            </div>
+    
+            <footer class="content">
+              <!-- <span class="qt-minus">-</span> -->
+              <span class="qt" id="quant">Price</span>
+              <span class="qt-plus">{{ i.price }}</span>
+    
+              <!-- <h2 class="full-price">Quantity </h2> -->
+              <span class="qt" id="quant">Quantity</span>
+              <input class="price" name= 'quant' type="number" />
+              <div class="right ">
+                <button class="btn" type="submit">Add</button>
+              </div>
+            </footer>
+          </article>
+          <!-- <footer id="site-footer">
+            <div class="container clearfix">
+        
+              <div class="left">
+                <h2 class="subtotal">Subtotal: ₹ <span>{{ i.price }}</span></h2>
+                <h3 class="tax">Taxes (5%): ₹ <span></span></h3>
+                <h3 class="shipping">Shipping: ₹ <span>5.00</span></h3>
+              </div> -->
+        
+              <!-- <div class="right">
+                <h1 class="total">Total: ₹ <span>{{ i.price }}</span></h1>
+                <button class="btn" type="submit">Add</button>
+              </div> -->
+        
+            <!-- </div>
+          </footer> --> 
+        </form>
+          {% endfor %}
+        </body>
+        </html>

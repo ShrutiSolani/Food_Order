@@ -17,6 +17,73 @@ body {
     clear: both;  
   }
   
+
+  #header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 2rem 4rem;
+    z-index: 1000;
+  }
+  
+  #header .fa-hamburger {
+    font-size: 4rem;
+    z-index: 10000;
+    color: #fff200;
+    cursor: pointer;
+    display: none;
+  }
+  
+  #header .logo img {
+    height: 5rem;
+  }
+  
+  #header nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    list-style: none;
+  }
+  
+  #header nav ul li {
+    margin-right: 4rem;
+  }
+  
+  #header nav ul li a {
+    color: #fff;
+    font-size: 2rem;
+  }
+  
+  #header nav ul li a:hover {
+    color: #FFF200;
+    text-decoration: none;
+  }
+  
+  .header-active {
+    background: #333;
+    height: 6rem;
+    -webkit-box-shadow: 2rem 0,5rem #000;
+            box-shadow: 2rem 0,5rem #000;
+  }
+  
+  .header-active nav ul {
+    margin: 0;
+  }
   #site-header, #site-footer {
     background: #fff;
   }

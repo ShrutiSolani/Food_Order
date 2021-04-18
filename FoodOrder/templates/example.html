@@ -115,17 +115,20 @@ body {
   </div>
 
   <div class="card-container">
+    {% for i in orders %}
+      {% for j in i %}
       <div class="card">
-          <img src="{% static 'images/card1.jpg' %}" alt="card1">
-          <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+          <img src="{{ j.Image }}" alt="card1">
+          <h2>{{ j.ItemName }}</h2>
           <a href="#"><button>View</button></a>
       </div>
-
-      <div class="card">
+      {% endfor %}
+      {% endfor %}
+      <!-- <div class="card">
           <img src="{% static 'images/card2.jpg' %}" alt="card2">
           <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
           <a href="#"><button>View</button></a>
-      </div>
+      </div> -->
 
       <!-- <div class="card">
           <img src="{% static 'images/card3.jpg' %}" alt="card3">
@@ -137,7 +140,7 @@ body {
         <img src="{% static 'images/card3.jpg' %}" alt="card4">
         <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
         <a href="#"><button>View</button></a> -->
-    </div>
+    <!-- </div> -->
   </div>
 </section>
 
@@ -231,7 +234,7 @@ body {
       </div> -->
 
   
-  <a href="#" style="margin-left: 47%;"><button>Add more</button></a>
+  <a href="{% url 'project_app:Menu' %}" style="margin-left: 47%;"><button>Add more</button></a>
   <br><br>
 </section>
 

@@ -7,6 +7,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.conf import settings
 from collections import Counter
+import datetime
 
 # Create your views here.
 def index(request):
@@ -54,7 +55,19 @@ def Ulogin(request):
             auth.login(request, user)
             restrolist = Restaurant.objects.filter()
             request.session["uid_save"] = user.id
-            return render(request, 'userhome.html', {'restro': restrolist})
+            now = datetime.datetime.now()
+            print(now)
+            myorders = Order.objects.filter(uId = user.id)
+            print(myorders)
+            itemidlist = []
+            for i in myorders:
+                x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
+                print(x)
+                print(type(x))
+                itemidlist.append(x)
+        
+            print(itemidlist)
+            return render(request, 'userhome.html', {'restro': restrolist, 'orders': itemidlist})
         else:
             messages.info(request, 'Invalid Credentials !')
             return render(request, 'registerUser.html')
@@ -68,8 +81,15 @@ def homepage(request):
             rid_save_item = request.session["rid_save"]
 
     getItems = Item.objects.filter(rId = rid_save_item)
-    
-    return render(request, 'example.html', {'items': getItems})
+    myorders = Order.objects.filter(rId = rid_save_item)
+    print(myorders)
+    itemidlist = []
+    for i in myorders:
+        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
+        print(x)
+        print(type(x))
+        itemidlist.append(x)
+    return render(request, 'example.html', {'items': getItems, 'orders': itemidlist})
 
 
 def showRlogin(request):
@@ -115,7 +135,18 @@ def Rlogin(request):
             # print(rId)
             # rId = Restaurant.objects.only('RId').get(email=email)
             request.session["rid_save"] = rId
-            return render(request, 'example.html')
+
+            getItems = Item.objects.filter(rId = rId)
+            myorders = Order.objects.filter(rId = rId)
+            print(myorders)
+            itemidlist = []
+            for i in myorders:
+                x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
+                print(x)
+                print(type(x))
+                itemidlist.append(x)
+            return render(request, 'example.html', {'items': getItems, 'orders': itemidlist})
+    
         else:
             messages.info(request, 'Invalid Credentials !')
             return render(request, 'registerUser.html')
@@ -160,7 +191,7 @@ def showcart(request, rid):
     # print(rid)
     # print(type(rid))
     request.session["rid_cart"] = rid
-    return render(request, 'cart2.html', {'items': items})
+    return render(request, 'cart3.html', {'items': items})
 
 
 def set_cookie(request):
@@ -177,30 +208,21 @@ def placeorder(request, item):
     if "rid_cart" in request.session:
             riD = request.session["rid_cart"]
 
-    # if request.method == 'POST':
-    #     quant = request.POST.get('quant')
-    quant = request.COOKIES
+    if request.method == 'POST':
+        quant = request.POST.get('quant')
+
     print('quant ',quant)
-    cart = dict(Counter(quant))
-    print("cart - ",cart)
-    for x,y in cart.items():
-        print("x - ",x)
-        print("y - ",y)
-        print("q - ",int(y))
-    # print(riD)
-    # print(type(riD))
     uId = RestroUser.objects.only("id").get(id= uid_save_item)
     rId = Restaurant.objects.only("RId").get(RId = riD)
     itemId = Item.objects.only("ItemId").get(ItemId = item)
-    # quantity = quant
-    # print(itemId.price)
-    # print(type(itemId.price))
-    amount = itemId.price*quant
-
-    # order = Order(uId = uId, rId = rId, itemId = itemId, quantity = quantity, amount = amount)
-    # order.save()
+    print(itemId.price)
+    print(type(itemId.price))
+    amount = (itemId.price)*int(quant)
+    print('amt - ', amount)
+    order = Order(uId = uId, rId = rId, itemId = itemId, quantity = quant, amount = amount)
+    order.save()
     print(' order saved ')
-    messages.info("Order places successfully")
+    messages.info(request, "Order places successfully")
     restrolist = Restaurant.objects.filter()
     return render(request, 'userhome.html', {'restro': restrolist})
 

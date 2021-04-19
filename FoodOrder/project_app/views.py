@@ -99,7 +99,7 @@ def Ulogin(request):
 
 def homepage(request):
     if "rid_save" in request.session:
-            rid_save_item = request.session["rid_save"]
+        rid_save_item = request.session["rid_save"]
 
     getItems = Item.objects.filter(rId = rid_save_item)
     myorders = Order.objects.filter(rId = rid_save_item)
@@ -139,7 +139,7 @@ def Rregister(request):
             email=email, address1 = address1, address2=address2, city=city, state=state, 
             logo=url)
             user.save()
-            return redirect('/home')
+            return redirect('Rlogin')
             # return render(request, 'example.html')
     else:
         return render(request, 'registerUser.html')

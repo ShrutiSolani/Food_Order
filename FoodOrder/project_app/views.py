@@ -8,10 +8,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from collections import Counter
 import datetime
+from django.contrib.auth import logout
+from random import randint
 
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    items = Item.objects.all()
+    return render(request,'index.html', {'items': items})
     
 
 def showUlogin(request):
@@ -38,42 +41,60 @@ def Uregister(request):
             last_name=lname,email=email,phone_no=phone_no, address1 = address1, 
             address2=address2,city=city,state=state)
             user.save()
-            return render(request, 'example.html')
+            return redirect('user')
+            # return render(request, 'example.html')
     else:
         return render(request, 'registerUser.html')
 
 
 def Ulogin(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        # print(username)
-        # print(password)
-        user = RestroUser.objects.get(username = username, password = password)
-        # print(user)
-        if user is not None:
-            auth.login(request, user)
-            restrolist = Restaurant.objects.filter()
-            request.session["uid_save"] = user.id
-            now = datetime.datetime.now()
-            print(now)
-            myorders = Order.objects.filter(uId = user.id)
-            print(myorders)
-            itemidlist = []
-            for i in myorders:
-                x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
-                print(x)
-                print(type(x))
-                itemidlist.append(x)
-        
-            print(itemidlist)
-            return render(request, 'userhome.html', {'restro': restrolist, 'orders': itemidlist})
+    if request.user.is_authenticated:
+        restrolist = Restaurant.objects.filter()
+        request.session["uid_save"] = request.user.id
+        now = datetime.datetime.now()
+        print(now)
+        myorders = Order.objects.filter(uId = request.user.id)
+        print(myorders)
+        itemidlist = []
+        for i in myorders:
+            x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
+            print(x)
+            print(type(x))
+            itemidlist.append(x)
+    
+        print(itemidlist)
+        return render(request, 'userhome.html', {'restro': restrolist, 'orders': itemidlist})
+    else:   
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            # print(username)
+            # print(password)
+            user = RestroUser.objects.get(username = username, password = password)
+            # print(user)
+            if user is not None:
+                auth.login(request, user)
+                restrolist = Restaurant.objects.filter()
+                request.session["uid_save"] = user.id
+                now = datetime.datetime.now()
+                print(now)
+                myorders = Order.objects.filter(uId = user.id)
+                print(myorders)
+                itemidlist = []
+                for i in myorders:
+                    x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName', 'Image')
+                    print(x)
+                    print(type(x))
+                    itemidlist.append(x)
+            
+                print(itemidlist)
+                return render(request, 'userhome.html', {'restro': restrolist, 'orders': itemidlist})
+            else:
+                messages.info(request, 'Invalid Credentials !')
+                return render(request, 'registerUser.html')
         else:
-            messages.info(request, 'Invalid Credentials !')
-            return render(request, 'registerUser.html')
-    else:
-        messages.info(request, 'Invalid Method !')
-        return redirect('showUlogin')
+            messages.info(request, 'Invalid Method !')
+            return redirect('showUlogin')
 
 
 def homepage(request):
@@ -238,3 +259,64 @@ def contact(request):
     return redirect('index')
 
     
+def gohome(request):
+    logout(request)
+    return redirect('/')
+
+
+def myorders(request):
+    ono = randint(100000, 999999)
+    request.session["ono_save"] = ono
+    if "uid_save" in request.session:
+        uid_save_item = request.session["uid_save"] 
+    order_details = Order.objects.filter(uId = uid_save_item)
+    itemidlist = []
+    restrolist = []
+    total = 0
+    for i in order_details:
+        total += i.amount
+        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
+        itemidlist.append(x)
+        y = Restaurant.objects.filter(RId = i.rId.RId).values('RestroName')
+        restrolist.append(y)
+
+    aftertax = total + (0.05*total)
+    delivery = aftertax + 5
+    return render(request, 'myorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'restro': restrolist ,'total':total,'tax':delivery})
+
+
+def rorders(request):
+    ono = randint(100000, 999999)
+    # if "ono_save" in request.session:
+    #     ono_item = request.session["ono_save"]
+    
+    if "rid_save" in request.session:
+            riD = request.session["rid_save"]
+
+    order_details = Order.objects.filter(rId = riD)
+    itemidlist = []
+    userlist = []
+    total = 0
+
+    for i in order_details:
+        total += i.amount
+        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
+        itemidlist.append(x)
+        y = RestroUser.objects.filter(id = i.uId.id).values('address1', 'address2', 'city')
+        userlist.append(y)
+
+
+    aftertax = total + (0.05*total)
+    delivery = aftertax + 5
+    return render(request, 'rorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'address': userlist,'total':total,'tax':delivery})
+
+
+def update_status(request, oid):
+    x = Order.objects.filter(OrderId = oid)
+    if request.method == 'POST':
+        st = request.POST.get('status')
+    
+    for i in x:
+        i.status = st
+        i.save()
+    return redirect('/')

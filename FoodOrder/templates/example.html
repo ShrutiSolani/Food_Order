@@ -67,6 +67,7 @@ body {
           <li><a href="#about">Reviews</a></li>
            <li><a href="#dish">dishes</a></li>
            <li><a href="#contact">contact</a></li>
+           <li><a href="{% url 'project_app:logout' %}">Logout</a></li>
       </ul>
   </nav>
 
@@ -120,7 +121,7 @@ body {
       <div class="card">
           <img src="{{ j.Image }}" alt="card1">
           <h2>{{ j.ItemName }}</h2>
-          <a href="#"><button>View</button></a>
+          <a href="{% url 'project_app:rorders' %}"><button>View</button></a>
       </div>
       {% endfor %}
       {% endfor %}

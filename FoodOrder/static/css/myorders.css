@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Exo 2', sans-serif;
+    text-transform: capitalize;
+    -webkit-transition: all .2s linear;
+    transition: all .2s linear;
+  }
+ 
+  html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+  }
+  
+  #header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 2rem 4rem;
+    z-index: 1000;
+  }
+  
+  #header .fa-hamburger {
+    font-size: 4rem;
+    z-index: 10000;
+    color: #fff200;
+    cursor: pointer;
+    display: none;
+  }
+  
+  #header .logo img {
+    height: 5rem;
+  }
+  
+  #header nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    list-style: none;
+  }
+  
+  #header nav ul li {
+    margin-right: 4rem;
+  }
+  
+  #header nav ul li a {
+    color: #000;
+    font-size: 2rem;
+  }
+  
+  #header nav ul li a:hover {
+    color: #FFF200;
+    text-decoration: none;
+  }
+  
+  .header-active {
+    background: #333;
+    height: 6rem;
+    -webkit-box-shadow: 2rem 0,5rem #000;
+            box-shadow: 2rem 0,5rem #000;
+  }
+  
+  .header-active nav ul {
+    margin: 0;
+  }
+  
+.order-box{
+    margin-top:2rem ;
+    border: 0.1rem solid #333;
+    border-radius: 0.5rem;
+}
+.status{
+    margin-left:50%;
+    margin-bottom:20px;
+    margin-top: 10px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.details{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.order-total,.restro{ padding-right: 5rem;
+    border-right: 0.2rem solid #FC8019;
+    
+}
+
+.order-total,.restro,.date{
+    padding-left: 3rem;
+}

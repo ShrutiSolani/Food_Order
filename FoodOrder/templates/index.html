@@ -86,12 +86,14 @@
         </div>
 
         <div class="card-container">
+            {% for i in items %}
             <div class="card">
-                <img src="{% static 'images/card1.jpg' %}" alt="card1">
-                <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
-                <a href="#"><button>read more</button></a>
+                <img src="{{ i.Image }}" alt="card1">
+                <h2>{{ i.ItemName }}</h2>
+                <a href="#"><button>Order</button></a>
             </div>
-
+            {% endfor %}
+<!-- 
             <div class="card">
                 <img src="{% static 'images/card2.jpg' %}" alt="card2">
                 <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
@@ -102,7 +104,7 @@
                 <img src="{% static 'images/card3.jpg' %}" alt="card3">
                 <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
                 <a href="#"><button>read more</button></a>
-            </div>
+            </div> -->
         </div>
 
     </section>
@@ -144,17 +146,18 @@
         </div>
     
         <div class="box-container">
-    
+            {% for i in items %}
             <div class="box">
-                <img src="{% static 'images/dish1.jpg' %}" alt="">
+                <img src="{{ i.Image }}" alt="">
                 <div class="info">
-                    <h3>dish1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <h3>{{ i.ItemName }}</h3>
+                    <p>{{ i.Description }}</p>
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
+            {% endfor %}
     
-            <div class="box">
+            <!-- <div class="box">
                 <img src="{% static 'images/dish2.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish2</h3>
@@ -197,7 +200,7 @@
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
                     <a href="#"><button>view</button></a>
                 </div>
-            </div>
+            </div> -->
     
         </div>
     

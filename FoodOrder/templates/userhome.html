@@ -65,8 +65,9 @@ body {
           <li><a href="#home">home</a></li>
           <li><a href="#special">Orders</a></li>
           <li><a href="#about">Reviews</a></li>
-           <li><a href="#dish">dishes</a></li>
-           <li><a href="#contact">contact</a></li>
+          <li><a href="#dish">dishes</a></li>
+          <li><a href="#contact">contact</a></li>
+          <li><a href="{% url 'project_app:logout' %}">Logout</a></li>
       </ul>
   </nav>
 
@@ -120,7 +121,7 @@ body {
       <div class="card">
           <img src="{{ j.Image }}" alt="card1">
           <h2>{{ j.ItemName }}</h2>
-          <a href="#"><button>Status</button></a>
+          <a href="{% url 'project_app:myorders' %}"><button>Status</button></a>
       </div>
       {% endfor %}
     {% endfor %}
@@ -174,7 +175,7 @@ body {
 <section id="dish" class="container">
 
   <div class="heading text-center">
-      <h1>YOUR <span>Restaurants</span></h1>
+      <h1>MY <span>Restaurants</span></h1>
   </div>
 
   <div class="box-container">

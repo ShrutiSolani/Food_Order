@@ -8,7 +8,7 @@ from . import views
 app_name = 'project_app'
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='index'),
     path('user/', views.showUlogin, name='user'),
     path('restro/', views.showRlogin, name='restro'),
     path('Ulogin/', views.Ulogin, name='Ulogin'),
@@ -21,6 +21,10 @@ urlpatterns = [
     path('showmenu/<int:rid>/', views.showcart, name='cart' ),
     path('placeorder/<int:item>/', views.placeorder, name='placeorder'),
     path('contact/', views.contact, name='contact'),
+    path('logout/', views.gohome, name='logout'),
+    path('myorders/', views.myorders, name='myorders'),
+    path('rorders/', views.rorders, name='rorders'),
+    path('update/<int:oid>/', views.update_status, name='update')
 
 ]
 

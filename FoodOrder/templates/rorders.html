@@ -48,10 +48,10 @@
         <h3 style="color: #00d748; border-bottom:0.1rem solid #333; padding-bottom:1rem; margin-top: 8%;">My Orders</h3>
         {% for i in order %}
         <div class="col-md-8 order-box" >
-            <form action="{% url 'project_app:update' oid=i.OrderId %}" method="post">
+            <form action="{% url 'project_app:update' oid=i.osid %}" method="post">
                 {% csrf_token %}
             <div class="header">
-                <h4 >ORDER NUMBER <strong>{{ ono }}</strong></h4>
+                <h4 >ORDER NUMBER <strong>{{ i.ono }}</strong></h4>
                 <select name="status" id="" class="badge bg-warning text-dark status" style="background-color: #FC8019;">
                     <option value="R">Received</option>
                     <option value="C">Cooking</option>
@@ -72,7 +72,7 @@
                     <P><span>+ 5% taxes</span></P>
                     <P><span>+ ₹ 5 Delivery Charges</span></P>
                     <P><span>-----------</span></P>
-                    <P>₹ <span>{{ tax }}</span></P>
+                    <P>₹ <span>{{ i.total }}</span></P>
                     <p>COD</p>
                 </div>
 
@@ -80,11 +80,7 @@
                     <p><strong>DATE</strong></p>
                     <p>{{ i.date }}</p>
                     <p><strong>ADDRESS</strong></p>
-                    {% for j in  address%}
-                    {% for k in j %}
-                    <p>{{ k.address1 }}, {{ k.address2 }}, {{ k.city }}</p>
-                    {% endfor %}
-                    {% endfor %}
+                    <p>{{ address.1 }}, {{ address.2 }}, {{ address.3 }}</p>
                 </div>
 
                 <div class="date">

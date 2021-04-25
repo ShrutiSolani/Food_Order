@@ -10,6 +10,7 @@ from collections import Counter
 import datetime
 from django.contrib.auth import logout
 from random import randint
+import json
 
 # Create your views here.
 def index(request):
@@ -265,7 +266,7 @@ def gohome(request):
 
 
 def myorders(request):
-    ono = randint(100000, 999999)
+    # ono = randint(100000, 999999)
     request.session["ono_save"] = ono
     if "uid_save" in request.session:
         uid_save_item = request.session["uid_save"] 
@@ -286,29 +287,57 @@ def myorders(request):
 
 
 def rorders(request):
-    ono = randint(100000, 999999)
-    # if "ono_save" in request.session:
-    #     ono_item = request.session["ono_save"]
+    order_summary(request)
+    # ono = randint(100000, 999999)
     
     if "rid_save" in request.session:
             riD = request.session["rid_save"]
+    # jsonDec = json.decoder.JSONDecoder()
+    # myPythonList = jsonDec.decode(myModel.myList)
+    # order_details = Order.objects.filter(rId = riD)
+    # itemidlist = []
+    # userlist = []
+    # total = 0
 
-    order_details = Order.objects.filter(rId = riD)
+    # for i in order_details:
+    #     total += i.amount
+    #     x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
+    #     itemidlist.append(x)
+    #     y = RestroUser.objects.filter(id = i.uId.id).values('address1', 'address2', 'city')
+    #     userlist.append(y)
+
+
+    # aftertax = total + (0.05*total)
+    # delivery = aftertax + 5
+
+    osummary = OrderSummary.objects.filter(rid = riD)
+    jsonDec = json.decoder.JSONDecoder()
     itemidlist = []
-    userlist = []
-    total = 0
+    for i in osummary:
+        itemidlist.append(jsonDec.decode(i.itemslist))
+    # itemidlist  = jsonDec.decode(osummary.itemslist)
+    print(itemidlist)
+    print(itemidlist[0])
+    print(itemidlist[0][0])
+    # print(itemidlist)
+    itemdetails = []
+    for i in itemidlist:
+        for j in i:
+            for k in j:
+                x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
+                itemdetails.append(x)
 
-    for i in order_details:
-        total += i.amount
-        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
-        itemidlist.append(x)
-        y = RestroUser.objects.filter(id = i.uId.id).values('address1', 'address2', 'city')
-        userlist.append(y)
-
-
-    aftertax = total + (0.05*total)
-    delivery = aftertax + 5
-    return render(request, 'rorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'address': userlist,'total':total,'tax':delivery})
+    userdetails = []
+    for i in osummary:
+        y = RestroUser.objects.values_list('address1', 'address2', 'city').get(id = i.uid.id)
+        # y = RestroUser.objects.get(id = i.uid.id).only('address1', 'address2', 'city')
+        userdetails.append(y)
+    print(userdetails)
+    print(userdetails[0][0])
+    total = osummary[0].total - 5
+    total = total - 0.05*total
+    return render(request, 'rorders.html', {'order': osummary, 'item':itemdetails, 'address': {'1': userdetails[0][0], '2': userdetails[0][1], '3':userdetails[0][2] }, 'total':total})
+    # return render(request, 'rorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'address': userlist,'total':total,'tax':delivery})
 
 
 def update_status(request, oid):
@@ -320,3 +349,33 @@ def update_status(request, oid):
         i.status = st
         i.save()
     return redirect('/')
+
+
+def order_summary(request):
+    ono = randint(100000, 999999)
+    if "uid_save" in request.session:
+        uid_save_item = request.session["uid_save"]
+        order_details = Order.objects.filter(uId = uid_save_item)
+        d = order_details[0].date.date()
+    elif "rid_save" in request.session:
+        riD = request.session["rid_save"]
+        order_details = Order.objects.filter(rId = riD)
+        d = order_details[0].date.date()
+        uid = order_details[0].uId
+    
+    itemidlist = []
+    total = 0
+
+    for i in order_details:
+        total += i.amount
+        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemId','ItemName','price')
+        itemidlist.append(list(x))
+        
+    # print(itemidlist)
+    # print(type(itemidlist[0]))
+    total = total + (0.05*total)
+    total += 5
+    itemlist = json.dumps(itemidlist)
+    osummary = OrderSummary(ono=ono, uid = uid, rid= order_details[0].rId, date= d, itemslist= itemlist, total=total)
+    osummary.save()
+    

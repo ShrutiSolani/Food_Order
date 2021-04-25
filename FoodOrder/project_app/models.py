@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+import random
 
 # Create your models here.
 class RestroUser(AbstractUser):
@@ -44,13 +45,13 @@ class Order(models.Model):
     quantity = models.IntegerField()
     amount = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
-    status_choices = [
-        ('R','Order Received'),
-        ('C','Cooking'),
-        ('P','Packed and Out For Delivery'),
-        ('D','Delivered'),
-    ]
-    status = models.CharField(max_length=5, choices=status_choices, default='C') 
+    # status_choices = [
+    #     ('R','Order Received'),
+    #     ('C','Cooking'),
+    #     ('P','Packed and Out For Delivery'),
+    #     ('D','Delivered'),
+    # ]
+    # status = models.CharField(max_length=5, choices=status_choices, default='R') 
 
 
 class Review(models.Model):
@@ -66,6 +67,18 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField(max_length=250)
 
-# class TotalOrder(models.Model):
-#     toid = models.AutoField(primary_key=True)
-#     itemslist = models.
+class OrderSummary(models.Model):
+    osid = models.AutoField(primary_key=True)
+    ono = models.IntegerField(unique=True, default=random.randint(100000, 999999))
+    uid = models.ForeignKey(RestroUser, on_delete=models.CASCADE)
+    rid = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    date = models.DateField()
+    itemslist = models.TextField()
+    total = models.IntegerField()
+    status_choices = [
+        ('R','Order Received'),
+        ('C','Cooking'),
+        ('P','Packed and Out For Delivery'),
+        ('D','Delivered'),
+    ]
+    status = models.CharField(max_length=5, choices=status_choices, default='R') 

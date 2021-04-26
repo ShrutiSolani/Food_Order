@@ -50,7 +50,7 @@
         <div class="col-md-8 order-box" >
 
             <div class="header">
-                <h4 >ORDER NUMBER <strong>{{ ono }}</strong></h4>
+                <h4 >ORDER NUMBER <strong>{{ i.ono }}</strong></h4>
                 <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">{{ i.status }}</span>
             </div>
 
@@ -63,17 +63,13 @@
                     <P><span>+ 5% taxes</span></P>
                     <P><span>+ ₹ 5 Delivery Charges</span></P>
                     <P><span>-----------</span></P>
-                    <P>₹ <span>{{ tax }}</span></P>
+                    <P>₹ <span>{{ i.total }}</span></P>
                     <p>COD</p>
                 </div>
 
                 <div class="restro">
                     <p><strong>RESTAURANT</strong></p>
-                    {% for x in restro %}
-                        {% for y in x %}
-                    <p>{{ y.RestroName }}</p>
-                    {% endfor %}
-                    {% endfor %}
+                    <p>{{ restro }}</p>
                     <p><strong>DATE</strong></p>
                     <p>{{ i.date }}</p>
                     

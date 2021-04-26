@@ -267,27 +267,58 @@ def gohome(request):
 
 def myorders(request):
     # ono = randint(100000, 999999)
-    request.session["ono_save"] = ono
+    # request.session["ono_save"] = ono
     if "uid_save" in request.session:
         uid_save_item = request.session["uid_save"] 
-    order_details = Order.objects.filter(uId = uid_save_item)
-    itemidlist = []
-    restrolist = []
-    total = 0
-    for i in order_details:
-        total += i.amount
-        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
-        itemidlist.append(x)
-        y = Restaurant.objects.filter(RId = i.rId.RId).values('RestroName')
-        restrolist.append(y)
+    # order_details = Order.objects.filter(uId = uid_save_item)
+    # itemidlist = []
+    # restrolist = []
+    # total = 0
+    # for i in order_details:
+    #     total += i.amount
+    #     x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemName','price')
+    #     itemidlist.append(x)
+    #     y = Restaurant.objects.filter(RId = i.rId.RId).values('RestroName')
+    #     restrolist.append(y)
 
-    aftertax = total + (0.05*total)
-    delivery = aftertax + 5
-    return render(request, 'myorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'restro': restrolist ,'total':total,'tax':delivery})
+    # aftertax = total + (0.05*total)
+    # delivery = aftertax + 5
+    osummary = OrderSummary.objects.filter(uid = uid_save_item)
+    jsonDec = json.decoder.JSONDecoder()
+    itemidlist = []
+    for i in osummary:
+        itemidlist.append(jsonDec.decode(i.itemslist))
+    # itemidlist  = jsonDec.decode(osummary.itemslist)
+    # print(itemidlist)
+    # print(itemidlist[0])
+    # print(itemidlist[0][0])
+    # print(itemidlist)
+    itemdetails = []
+    for i in itemidlist:
+        for j in i:
+            for k in j:
+                x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
+                itemdetails.append(x)
+
+    restrodetails = []
+    for i in osummary:
+        y = Restaurant.objects.values_list('RestroName').get(RId = i.rid.RId)
+        print(y)
+        # y = RestroUser.objects.values_list('address1', 'address2', 'city').get(id = i.uid.id)
+        # y = RestroUser.objects.get(id = i.uid.id).only('address1', 'address2', 'city')
+    restrodetails.append(y[0])
+    # print(userdetails)
+    # print(userdetails[0][0])
+    total = osummary[0].total - 5
+    total = total - 0.05*total
+    return render(request, 'myorders.html', {'order': osummary, 'restro': y[0], 'item':itemdetails, 'total':total})
+    # return render(request, 'myorders.html', {'ono':ono,
+    # 'order':order_details, 'item':itemidlist, 
+    # 'restro': restrolist ,'total':total,'tax':delivery})
 
 
 def rorders(request):
-    order_summary(request)
+    # order_summary(request)
     # ono = randint(100000, 999999)
     
     if "rid_save" in request.session:
@@ -357,6 +388,7 @@ def order_summary(request):
         uid_save_item = request.session["uid_save"]
         order_details = Order.objects.filter(uId = uid_save_item)
         d = order_details[0].date.date()
+        uid = order_details[0].uId
     elif "rid_save" in request.session:
         riD = request.session["rid_save"]
         order_details = Order.objects.filter(rId = riD)
@@ -378,4 +410,4 @@ def order_summary(request):
     itemlist = json.dumps(itemidlist)
     osummary = OrderSummary(ono=ono, uid = uid, rid= order_details[0].rId, date= d, itemslist= itemlist, total=total)
     osummary.save()
-    
+    return redirect('/Ulogin')

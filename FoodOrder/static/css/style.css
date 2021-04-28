@@ -357,6 +357,7 @@ html {
 
 #about .image img {
   width: 30vw;
+  background-color: inherit;
 }
 
 #dish {

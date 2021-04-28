@@ -213,14 +213,14 @@ def showcart(request, rid):
     # print(rid)
     # print(type(rid))
     request.session["rid_cart"] = rid
-    return render(request, 'cart3.html', {'items': items})
+    return render(request, 'cart4.html', {'items': items})
 
 
-def set_cookie(request):
-    if "rid_cart" in request.session:
-        rid = request.session["rid_cart"]
-    items = Item.objects.filter(rId = rid)
-    response = render(request, 'cart2.html', {'items': items})
+# def set_cookie(request):
+#     if "rid_cart" in request.session:
+#         rid = request.session["rid_cart"]
+#     items = Item.objects.filter(rId = rid)
+#     response = render(request, 'cart2.html', {'items': items})
 
 def placeorder(request, item):
     print('in placeorder')
@@ -245,8 +245,9 @@ def placeorder(request, item):
     order.save()
     print(' order saved ')
     messages.info(request, "Order places successfully")
-    restrolist = Restaurant.objects.filter()
-    return render(request, 'userhome.html', {'restro': restrolist})
+    # restrolist = Restaurant.objects.filter()
+    items = Item.objects.filter(rId = rId)
+    return render(request, 'cart4.html', {'items': items})
 
 
 def contact(request):
@@ -294,11 +295,28 @@ def myorders(request):
     # print(itemidlist[0][0])
     # print(itemidlist)
     itemdetails = []
+    qt = []
     for i in itemidlist:
         for j in i:
             for k in j:
-                x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
-                itemdetails.append(x)
+                x = Item.objects.values_list('ItemName', 'price').get(ItemId = k['ItemId'])
+                print(x)
+                q = Order.objects.values_list('quantity').get(uId = uid_save_item, itemId = k['ItemId'])
+                print(q)
+                itemd = x + q
+                print(itemd)
+                print(type(itemd))
+                # x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
+                # print(x)
+                # itemdetails.append(x)
+                # q = Order.objects.filter(uId = uid_save_item, itemId = k['ItemId']).values('quantity')
+                # qt.append(int(q))
+                # x.extra(
+                #     select= {'qt': q}
+                # )
+                # print(x)
+                # x['qt'] = q
+                itemdetails.append(itemd)
 
     restrodetails = []
     for i in osummary:
@@ -311,7 +329,7 @@ def myorders(request):
     # print(userdetails[0][0])
     total = osummary[0].total - 5
     total = total - 0.05*total
-    return render(request, 'myorders.html', {'order': osummary, 'restro': y[0], 'item':itemdetails, 'total':total})
+    return render(request, 'myorders2.html', {'order': osummary, 'restro': y[0], 'item':itemdetails, 'total':total, 'tax': osummary[0].total})
     # return render(request, 'myorders.html', {'ono':ono,
     # 'order':order_details, 'item':itemidlist, 
     # 'restro': restrolist ,'total':total,'tax':delivery})
@@ -386,8 +404,9 @@ def order_summary(request):
     ono = randint(100000, 999999)
     if "uid_save" in request.session:
         uid_save_item = request.session["uid_save"]
-        order_details = Order.objects.filter(uId = uid_save_item)
-        d = order_details[0].date.date()
+        d = datetime.date.today()
+        order_details = Order.objects.filter(uId = uid_save_item, odate = d)
+        # d = order_details[0].date.date()
         uid = order_details[0].uId
     elif "rid_save" in request.session:
         riD = request.session["rid_save"]

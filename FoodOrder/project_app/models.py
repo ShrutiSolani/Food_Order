@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 import random
-
+from datetime import date
 # Create your models here.
 class RestroUser(AbstractUser):
     phone_no = models.IntegerField()
@@ -44,7 +44,8 @@ class Order(models.Model):
     itemId = models.ForeignKey(Item, on_delete = models.CASCADE)
     quantity = models.IntegerField()
     amount = models.IntegerField()
-    date = models.DateTimeField(auto_now_add=True)
+    odate = models.DateField(default=date.today)
+    # odate = models.DateField(auto_now_add=True)
     # status_choices = [
     #     ('R','Order Received'),
     #     ('C','Cooking'),

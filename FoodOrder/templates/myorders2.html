@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+     <!-- Latest compiled and minified CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+     <!-- jQuery library -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+     <!-- Latest compiled JavaScript -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Lemonada:wght@300&family=Lobster&display=swap" rel="stylesheet">
+
+
+     <link rel="stylesheet" href="{% static 'css/myorders2.css' %}">
+
+    <title>My Orders</title>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <ul>
+                <li><a href="{% url 'project_app:Ulogin' %}">home</a></li>
+                <li><a href="#special">Orders</a></li>
+                <li><a href="#about">Reviews</a></li>
+                <li><a href="#dish">dishes</a></li>
+                <li><a href="#contact">contact</a></li>
+                <li><a href="{% url 'project_app:logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <div class="fas fa-hamburger"></div>
+
+        <a href="#" class="logo"><img src="{% static 'images/logo.png' %}" class="logo-png" alt=""></a>
+      </header>
+ <!-- legend code  -->
+    <div class="container">
+
+        <h3 style="color: #00d748; border-bottom:0.1rem solid #333; padding-bottom:1rem; margin-top: 8%;">My Orders</h3>
+        
+        <div class="legend">
+
+
+          <h4>Order Status</h4>
+          <ul>
+              <li><span style="background-color:#FA5C43"></span>R - Order Reciever</li>
+              <li><span style="background-color:#998973"></span>C - Cooking</li>
+              <li><span style="background-color:#FAAE43"></span>P - Packed,Out for Delivery</li>
+              <li><span style="background-color:#1F6980"></span>D - Delievered</li>
+              </ul>
+       </div>
+
+       {% for i in order %}
+
+        <div class="col-md-8 order-box" >
+
+            <div class="header">
+                <h4 >ORDER NUMBER <strong>{{ ono }}</strong></h4>
+                <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">{{ i.status }}</span>
+            </div>
+
+
+            <div class="details">
+
+                <div class="order-total">
+                    <p><strong>ORDER TOTAL</strong></p>
+                    <P>₹ <span>{{ total }}</span></P>
+                    <P><span>+ 5% taxes</span></P>
+                    <P><span>+ ₹ 5 Delivery Charges</span></P>
+                    <P><span>-----------</span></P>
+                    <P>₹ <span>{{ tax }}</span></P>
+                    <p>COD</p>
+                </div>
+
+                <div class="restro">
+                    <p><strong>RESTAURANT</strong></p>
+                    {% for x in restro %}
+                        {% for y in x %}
+                    <p>{{ y.RestroName }}</p>
+                    {% endfor %}
+                    {% endfor %}
+                    <p><strong>DATE</strong></p>
+                    <p>{{ i.date }}</p>
+
+                </div>
+
+                <div class="date">
+                    <p><strong>ITEMS</strong></p>
+            
+                        {% for a,b,c in item %}
+                            <p>{{ a }}</p>
+                            <p>{{ b }}</p>
+                            <p>Qt. {{ c }}</p>
+                        {% endfor %}
+                    <!-- <p><strong>TIME</strong></p>
+                    <p>12.00 PM</p> -->
+                </div>
+
+
+            </div>
+        </div>
+        {% endfor %}
+        <!-- <div class="col-md-8 order-box" >
+
+            <div class="header">
+                <h4 >ORDER NUMBER <strong>2974537</strong></h4>
+                <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">Delivered</span>
+            </div>
+
+
+            <div class="details">
+
+                <div class="order-total">
+                    <p><strong>ORDER TOTAL</strong></p>
+                    <P>₹ <span>1541.00</span></P>
+                    <p>COD</p>
+                </div>
+
+                <div class="restro">
+                    <p><strong>RESTAURANT</strong></p>
+                    <p>Burj Khalifa</p>
+                    <p>Items</p>
+                </div>
+
+                <div class="date">
+                    <p><strong>DATE</strong></p>
+                    <p>24-04-2021</p>
+                    <p><strong>TIME</strong></p>
+                    <p>12.00 PM</p>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-md-8 order-box" >
+
+            <div class="header">
+                <h4 >ORDER NUMBER <strong>2974537</strong></h4>
+                <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">Delivered</span>
+            </div>
+
+
+            <div class="details">
+
+                <div class="order-total">
+                    <p><strong>ORDER TOTAL</strong></p>
+                    <P>₹ <span>1541.00</span></P>
+                    <p>COD</p>
+                </div>
+
+                <div class="restro">
+                    <p><strong>RESTAURANT</strong></p>
+                    <p>Burj Khalifa</p>
+                    <p>Items</p>
+                </div>
+
+                <div class="date">
+                    <p><strong>DATE</strong></p>
+                    <p>24-04-2021</p>
+                    <p><strong>TIME</strong></p>
+                    <p>12.00 PM</p>
+                </div>
+
+
+            </div> -->
+        <!-- </div> -->
+    </div>
+</body>
+</html>

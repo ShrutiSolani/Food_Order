@@ -24,7 +24,7 @@
 
 
     <link rel="stylesheet" href="{% static 'css/cart2.css' %}">
-   
+
 
 
 
@@ -34,67 +34,77 @@
     <header id="site-header">
         <div class="container">
           <h1>Shopping cart</h1>
-      </div>
-      <div class="right ">
-        <a href = "{% url 'project_app:saveorder' %}"><button class="btn">Checkout</button></a>
+        
+        <div class="right ">
+          <a href = "{% url 'project_app:saveorder' %}"><button class="btn">Checkout</button></a>
+        </div>
       </div>
       </header>
-    
+
       <div class="container">
-    
-        <section id="cart"> 
+
+        <section id="cart">
             {% for i in items %}
+
+            <!-- <div class="right ">
+              <button class="btn" type="submit">Add</button>
+            </div> -->
             <form action="{% url 'project_app:placeorder' item=i.ItemId %}" method="post" id="your_form" enctype="multipart/form-data">
                 {% csrf_token %}
           <article class="product">
             <header class="header">
               <a class="remove">
                 <img src="{{ i.Image }}" alt="">
-    
+
                 <h3>Remove Dish</h3>
               </a>
             </header>
 
             <!-- INPUT WALA JUGAD -->
             <!-- <input type="number" class="qt-input" name='quant' id='quant'> -->
-    
+
             <div class="content">
-    
+
               <h1>{{ i.ItemName }}</h1>
 
               {{ i.Description }}
 
+              <div class="right ">
+                <button class="btn" type="submit">Add</button>
+              </div>
+
             </div>
-    
+
             <footer class="content">
               <!-- <span class="qt-minus">-</span> -->
               <span class="qt" id="quant">Price</span>
               <span class="qt-plus">{{ i.price }}</span>
-    
+
               <!-- <h2 class="full-price">Quantity </h2> -->
-              <span class="qt" id="quant">Quantity</span>
+              <span style="margin-left:170px;" class="qt" id="quant">Quantity</span>
               <input class="price" name= 'quant' type="number" />
-              <div class="right ">
+              <!-- <div class="right ">
                 <button class="btn" type="submit">Add</button>
-              </div>
+              </div> -->
             </footer>
           </article>
+          <br><br><br>
           <!-- <footer id="site-footer">
             <div class="container clearfix">
-        
+
               <div class="left">
                 <h2 class="subtotal">Subtotal: ₹ <span>{{ i.price }}</span></h2>
                 <h3 class="tax">Taxes (5%): ₹ <span></span></h3>
                 <h3 class="shipping">Shipping: ₹ <span>5.00</span></h3>
               </div> -->
-        
+
               <!-- <div class="right">
                 <h1 class="total">Total: ₹ <span>{{ i.price }}</span></h1>
                 <button class="btn" type="submit">Add</button>
               </div> -->
-        
+
             <!-- </div>
-          </footer> --> 
+          </footer> -->
         </form>
           {% endfor %}
         </body>

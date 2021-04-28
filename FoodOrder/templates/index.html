@@ -54,11 +54,11 @@
         <div class="row min-vh-100 align-items-center">
 
             <div class="col-md-8 ml-md-5 text-md-left  content" style="margin-top: 20%;">
-                <h1>food that you can't resist</h1>
-                <h2>enjoy the marvelous taste</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos laborum labore officia exercitationem adipisci rem itaque, porro beatae qui perferendis dicta fugit harum ipsam pariatur autem repudiandae nihil optio minima?</p>
+                <h1>Think Global Eat Global</h1>
+                <h2>Meals and Memories are made here</h2>
+                <p>Sometimes a little comfort food can go a long way</p>
                 
-                <a href="#special"><button>get started</button></a>
+                <a href="#special"><button>Get Started</button></a>
             </div>
 
             <div class="video-container">
@@ -81,30 +81,36 @@
     <section id="special" class="container-fluid">
 
         <div class="heading text-center">
-            <h1>our <span>special</span></h1>
-            <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+            <h1>our <span>specials</span></h1>
+            <!-- <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p> -->
         </div>
 
         <div class="card-container">
-            {% for i in items %}
+            <!-- {% for i in items %}
             <div class="card">
                 <img src="{{ i.Image }}" alt="card1">
                 <h2>{{ i.ItemName }}</h2>
                 <a href="#"><button>Order</button></a>
             </div>
-            {% endfor %}
-<!-- 
+            {% endfor %} -->
+
+            <div class="card">
+                <img src="{% static 'images/card1.jpg' %}" alt="card2">
+                <p>A light and crisp taste</p>
+                <a href="#"><button>read more</button></a>
+            </div>
+
             <div class="card">
                 <img src="{% static 'images/card2.jpg' %}" alt="card2">
-                <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+                <p>Rich in flavour <br> A burning taste from hot spices</p>
                 <a href="#"><button>read more</button></a>
             </div>
 
             <div class="card">
                 <img src="{% static 'images/card3.jpg' %}" alt="card3">
-                <p>lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji lorem ispidfsdfdsj jsjdfkjdsk jdjklsjkl jfsliei jiji</p>
+                <p>A fresh, vivid, or invigorating flavor</p>
                 <a href="#"><button>read more</button></a>
-            </div> -->
+            </div>
         </div>
 
     </section>
@@ -121,14 +127,16 @@
         <div class="row min-vh-100">
     
             <div class="col-md-6 text-center text-md-left align-self-center content">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi recusandae iusto, perferendis earum laboriosam rerum et quisquam iste vel commodi corporis praesentium porro impedit ullam!</p>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci iure aliquam illum quaerat quia voluptate.</p>
-                <a href="#"><button>learn more</button></a>
+                <h2>Meet the Makers</h2>
+                <p>Rashi Lodha - rst@gmail.com</p>
+                <p>Shruti Solani - stu@gmail.com</p>
+                <p>Yash Nistane - yza@gmail.com</p>
+                <a href="#"><button>Read more</button></a>
             </div>
     
             <div class="col-md-6 image">
                 <!-- <img src="{% static 'images/pic.png' %}" alt=""> -->
-                <img src="{% static 'images/deliveryboy.jpeg' %}" alt="">
+                <img src="{% static 'images/deliveryboy.png' %}" alt="">
             </div>
     
         </div>
@@ -147,7 +155,7 @@
         </div>
     
         <div class="box-container">
-            {% for i in items %}
+            <!-- {% for i in items %}
             <div class="box">
                 <img src="{{ i.Image }}" alt="">
                 <div class="info">
@@ -156,13 +164,23 @@
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
-            {% endfor %}
+            {% endfor %} -->
+
+
+            <div class="box">
+                <img src="{% static 'images/dish1.jpg' %}" alt="">
+                <div class="info">
+                    <h3>dish1</h3>
+                    <p>A smooth and rich texture</p>
+                    <a href="#"><button>view</button></a>
+                </div>
+            </div>
     
-            <!-- <div class="box">
+            <div class="box">
                 <img src="{% static 'images/dish2.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish2</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <p>Rich in flavour <br> A burning taste from hot spices</p>
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
@@ -171,7 +189,7 @@
                 <img src="{% static 'images/dish3.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish3</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <p>Vivid, spicy, piquant, utterly savory flavor</p>
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
@@ -180,7 +198,7 @@
                 <img src="{% static 'images/dish4.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish4</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <p>Healthy bite with the fresh herbs and vegetables</p>
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
@@ -189,7 +207,7 @@
                 <img src="{% static 'images/dish5.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish5</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <p>Flavorful soup with the fresh herbs and vegetables</p>
                     <a href="#"><button>view</button></a>
                 </div>
             </div>
@@ -198,10 +216,10 @@
                 <img src="{% static 'images/dish6.jpg' %}" alt="">
                 <div class="info">
                     <h3>dish6</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, nihil.</p>
+                    <p>Light and less spicy</p>
                     <a href="#"><button>view</button></a>
                 </div>
-            </div> -->
+            </div>
     
         </div>
     

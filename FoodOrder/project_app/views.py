@@ -140,7 +140,7 @@ def Rregister(request):
             email=email, address1 = address1, address2=address2, city=city, state=state, 
             logo=url)
             user.save()
-            return redirect('Rlogin')
+            return redirect('/Rlogin')
             # return render(request, 'example.html')
     else:
         return render(request, 'registerUser.html')

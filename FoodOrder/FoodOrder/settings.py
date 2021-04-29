@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'FoodOrder.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'foodorder',
+        'NAME': 'foodorderproject',
         'USER': 'root', 
         'PASSWORD': '',
         'HOST': 'localhost',

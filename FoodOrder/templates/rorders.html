@@ -72,7 +72,7 @@
                     <P><span>+ 5% taxes</span></P>
                     <P><span>+ ₹ 5 Delivery Charges</span></P>
                     <P><span>-----------</span></P>
-                    <P>₹ <span>{{ i.total }}</span></P>
+                    <P>₹ <span>{{ aftertax }}</span></P>
                     <p>COD</p>
                 </div>
 
@@ -87,9 +87,9 @@
                     <p><strong>ITEMS</strong></p>
                     {% for j in item %}
                         {% for k in j %}
-                    <p>{{ k.ItemName }}</p>
-                    <p>{{ k.price }}</p>
-                    <p>Qt. {{ i.quantity }}</p>
+                    <p>{{ k.1 }}</p>
+                    <p>{{ k.2 }}</p>
+                    <p>Qt. {{ i.quant }}</p>
                     {% endfor %}
                     {% endfor %}
                    

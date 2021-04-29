@@ -42,7 +42,7 @@ def Uregister(request):
             last_name=lname,email=email,phone_no=phone_no, address1 = address1, 
             address2=address2,city=city,state=state)
             user.save()
-            return redirect('user')
+            return redirect('/user')
             # return render(request, 'example.html')
     else:
         return render(request, 'registerUser.html')
@@ -186,7 +186,7 @@ def addItem(request):
         rid_save_item = None
         if "rid_save" in request.session:
             rid_save_item = request.session["rid_save"]
-
+        print(rid_save_item)
         r_id = Restaurant.objects.only("RId").get(RId = rid_save_item)
         ItemName = request.POST.get('title')
         Description = request.POST.get('ingredients')
@@ -290,33 +290,33 @@ def myorders(request):
     for i in osummary:
         itemidlist.append(jsonDec.decode(i.itemslist))
     # itemidlist  = jsonDec.decode(osummary.itemslist)
-    # print(itemidlist)
+    print(itemidlist)
     # print(itemidlist[0])
     # print(itemidlist[0][0])
     # print(itemidlist)
-    itemdetails = []
-    qt = []
-    for i in itemidlist:
-        for j in i:
-            for k in j:
-                x = Item.objects.values_list('ItemName', 'price').get(ItemId = k['ItemId'])
-                print(x)
-                q = Order.objects.values_list('quantity').get(uId = uid_save_item, itemId = k['ItemId'])
-                print(q)
-                itemd = x + q
-                print(itemd)
-                print(type(itemd))
-                # x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
-                # print(x)
-                # itemdetails.append(x)
-                # q = Order.objects.filter(uId = uid_save_item, itemId = k['ItemId']).values('quantity')
-                # qt.append(int(q))
-                # x.extra(
-                #     select= {'qt': q}
-                # )
-                # print(x)
-                # x['qt'] = q
-                itemdetails.append(itemd)
+    # itemdetails = []
+    # qt = []
+    # for i in itemidlist:
+    #     for j in i:
+    #         for k in j:
+    #             x = Item.objects.values_list('ItemName', 'price').get(ItemId = k['ItemId'])
+    #             print(x)
+    #             q = Order.objects.values_list('quantity').get(uId = uid_save_item, itemId = k['ItemId'])
+    #             print(q)
+    #             itemd = x + q
+    #             print(itemd)
+    #             print(type(itemd))
+    #             # x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
+    #             # print(x)
+    #             # itemdetails.append(x)
+    #             # q = Order.objects.filter(uId = uid_save_item, itemId = k['ItemId']).values('quantity')
+    #             # qt.append(int(q))
+    #             # x.extra(
+    #             #     select= {'qt': q}
+    #             # )
+    #             # print(x)
+    #             # x['qt'] = q
+    #             itemdetails.append(itemd)
 
     restrodetails = []
     for i in osummary:
@@ -327,17 +327,15 @@ def myorders(request):
     restrodetails.append(y[0])
     # print(userdetails)
     # print(userdetails[0][0])
-    total = osummary[0].total - 5
-    total = total - 0.05*total
-    return render(request, 'myorders2.html', {'order': osummary, 'restro': y[0], 'item':itemdetails, 'total':total, 'tax': osummary[0].total})
+    total = osummary[0].total 
+    after_tax = osummary[0].aftertax
+    return render(request, 'myorders2.html', {'order': osummary, 'restro': y[0], 'item':itemidlist, 'total':total, 'tax': after_tax})
     # return render(request, 'myorders.html', {'ono':ono,
     # 'order':order_details, 'item':itemidlist, 
     # 'restro': restrolist ,'total':total,'tax':delivery})
 
 
 def rorders(request):
-    # order_summary(request)
-    # ono = randint(100000, 999999)
     
     if "rid_save" in request.session:
             riD = request.session["rid_save"]
@@ -364,17 +362,17 @@ def rorders(request):
     itemidlist = []
     for i in osummary:
         itemidlist.append(jsonDec.decode(i.itemslist))
-    # itemidlist  = jsonDec.decode(osummary.itemslist)
+    # itemidlist  = jsonDec.decode(osummary[0].itemslist)
     print(itemidlist)
     print(itemidlist[0])
     print(itemidlist[0][0])
     # print(itemidlist)
     itemdetails = []
-    for i in itemidlist:
-        for j in i:
-            for k in j:
-                x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
-                itemdetails.append(x)
+    # for i in itemidlist:
+    #     for j in i:
+    #         for k in j:
+    #             x = Item.objects.filter(ItemId = k['ItemId']).values('ItemName','price')
+    #             itemdetails.append(x)
 
     userdetails = []
     for i in osummary:
@@ -383,14 +381,14 @@ def rorders(request):
         userdetails.append(y)
     print(userdetails)
     print(userdetails[0][0])
-    total = osummary[0].total - 5
-    total = total - 0.05*total
-    return render(request, 'rorders.html', {'order': osummary, 'item':itemdetails, 'address': {'1': userdetails[0][0], '2': userdetails[0][1], '3':userdetails[0][2] }, 'total':total})
+    total = osummary[0].total
+    after_tax = osummary[0].aftertax
+    return render(request, 'rorders.html', {'order': osummary, 'item':itemidlist, 'address': {'1': userdetails[0][0], '2': userdetails[0][1], '3':userdetails[0][2] }, 'total':total, 'aftertax': after_tax})
     # return render(request, 'rorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'address': userlist,'total':total,'tax':delivery})
 
 
 def update_status(request, oid):
-    x = Order.objects.filter(OrderId = oid)
+    x = OrderSummary.objects.filter(osid = oid)
     if request.method == 'POST':
         st = request.POST.get('status')
     
@@ -400,33 +398,60 @@ def update_status(request, oid):
     return redirect('/')
 
 
+# def order_summary(request):
+#     ono = randint(100000, 999999)
+#     if "uid_save" in request.session:
+#         uid_save_item = request.session["uid_save"]
+#         d = datetime.date.today()
+#         order_details = Order.objects.filter(uId = uid_save_item, odate = d)
+#         # d = order_details[0].date.date()
+#         uid = order_details[0].uId
+#     elif "rid_save" in request.session:
+#         riD = request.session["rid_save"]
+#         order_details = Order.objects.filter(rId = riD)
+#         d = order_details[0].date.date()
+#         uid = order_details[0].uId
+    
+#     itemidlist = []
+#     total = 0
+
+#     for i in order_details:
+#         total += i.amount
+#         x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemId','ItemName','price')
+#         itemidlist.append(list(x))
+        
+#     # print(itemidlist)
+#     # print(type(itemidlist[0]))
+#     total = total + (0.05*total)
+#     total += 5
+#     itemlist = json.dumps(itemidlist)
+#     osummary = OrderSummary(ono=ono, uid = uid, rid= order_details[0].rId, date= d, itemslist= itemlist, total=total)
+#     osummary.save()
+#     return redirect('/Ulogin')
+
+
 def order_summary(request):
     ono = randint(100000, 999999)
     if "uid_save" in request.session:
         uid_save_item = request.session["uid_save"]
+
         d = datetime.date.today()
         order_details = Order.objects.filter(uId = uid_save_item, odate = d)
-        # d = order_details[0].date.date()
         uid = order_details[0].uId
-    elif "rid_save" in request.session:
-        riD = request.session["rid_save"]
-        order_details = Order.objects.filter(rId = riD)
-        d = order_details[0].date.date()
-        uid = order_details[0].uId
-    
-    itemidlist = []
-    total = 0
-
-    for i in order_details:
-        total += i.amount
-        x = Item.objects.filter(ItemId = i.itemId.ItemId).values('ItemId','ItemName','price')
-        itemidlist.append(list(x))
         
-    # print(itemidlist)
-    # print(type(itemidlist[0]))
-    total = total + (0.05*total)
-    total += 5
-    itemlist = json.dumps(itemidlist)
-    osummary = OrderSummary(ono=ono, uid = uid, rid= order_details[0].rId, date= d, itemslist= itemlist, total=total)
-    osummary.save()
-    return redirect('/Ulogin')
+        itemidlist = []
+        after_tax = 0.0
+        total = 0
+        for i in order_details:
+            total += i.amount
+            x = Item.objects.values_list('ItemId' ,'ItemName', 'price').get(ItemId = i.itemId.ItemId)
+            itemidlist.append(x)
+        after_tax = total + (0.05*total) + 5
+        itemlist = json.dumps(itemidlist)
+        osummary = OrderSummary(date = d, ono = ono, uid=uid, rid=order_details[0].rId, 
+        itemslist= itemlist, total=total, aftertax=after_tax)
+        osummary.save()
+        return redirect('/Ulogin')
+    else: 
+        messages.info("Order not successfull")
+        return redirect('user')

@@ -75,7 +75,9 @@ class OrderSummary(models.Model):
     rid = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     date = models.DateField()
     itemslist = models.TextField()
+    quant = models.TextField(default='0')
     total = models.IntegerField()
+    aftertax = models.FloatField(default = 100.0)
     status_choices = [
         ('R','Order Received'),
         ('C','Cooking'),

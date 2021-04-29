@@ -64,7 +64,7 @@
         <div class="col-md-8 order-box" >
 
             <div class="header">
-                <h4 >ORDER NUMBER <strong>{{ ono }}</strong></h4>
+                <h4 >ORDER NUMBER <strong>{{ i.ono }}</strong></h4>
                 <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">{{ i.status }}</span>
             </div>
 
@@ -83,11 +83,12 @@
 
                 <div class="restro">
                     <p><strong>RESTAURANT</strong></p>
-                    {% for x in restro %}
+                    <p>{{ restro }}</p>
+                    <!-- {% for x in restro %}
                         {% for y in x %}
                     <p>{{ y.RestroName }}</p>
                     {% endfor %}
-                    {% endfor %}
+                    {% endfor %} -->
                     <p><strong>DATE</strong></p>
                     <p>{{ i.date }}</p>
 
@@ -96,10 +97,12 @@
                 <div class="date">
                     <p><strong>ITEMS</strong></p>
             
-                        {% for a,b,c in item %}
-                            <p>{{ a }}</p>
-                            <p>{{ b }}</p>
-                            <p>Qt. {{ c }}</p>
+                        {% for a in item %}
+                        {% for b in a %}
+                            <p>{{ b.1 }}</p>
+                            <p>{{ b.2 }}</p>
+                            <p>{{ i.quant }}</p>
+                        {% endfor %}
                         {% endfor %}
                     <!-- <p><strong>TIME</strong></p>
                     <p>12.00 PM</p> -->

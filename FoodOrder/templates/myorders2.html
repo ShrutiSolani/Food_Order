@@ -59,13 +59,13 @@
               </ul>
        </div>
 
-       {% for i in order %}
+
 
         <div class="col-md-8 order-box" >
 
             <div class="header">
-                <h4 >ORDER NUMBER <strong>{{ i.ono }}</strong></h4>
-                <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">{{ i.status }}</span>
+                <h4 >ORDER NUMBER <strong>{{ order.ono }}</strong></h4>
+                <span class="badge bg-warning text-dark status" style="background-color: #FC8019;">{{ order.status }}</span>
             </div>
 
 
@@ -90,7 +90,7 @@
                     {% endfor %}
                     {% endfor %} -->
                     <p><strong>DATE</strong></p>
-                    <p>{{ i.date }}</p>
+                    <p>{{ order.date }}</p>
 
                 </div>
 
@@ -101,7 +101,7 @@
                         {% for b in a %}
                             <p>{{ b.1 }}</p>
                             <p>{{ b.2 }}</p>
-                            <p>{{ i.quant }}</p>
+                            <p>Qt. {{ b.3 }}</p>
                         {% endfor %}
                         {% endfor %}
                     <!-- <p><strong>TIME</strong></p>
@@ -111,7 +111,7 @@
 
             </div>
         </div>
-        {% endfor %}
+
         <!-- <div class="col-md-8 order-box" >
 
             <div class="header">

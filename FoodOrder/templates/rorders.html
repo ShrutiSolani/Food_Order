@@ -46,12 +46,12 @@
     <div class="container">
 
         <h3 style="color: #00d748; border-bottom:0.1rem solid #333; padding-bottom:1rem; margin-top: 8%;">My Orders</h3>
-        {% for i in order %}
+      
         <div class="col-md-8 order-box" >
-            <form action="{% url 'project_app:update' oid=i.osid %}" method="post">
+            <form action="{% url 'project_app:update' oid=order.osid %}" method="post">
                 {% csrf_token %}
             <div class="header">
-                <h4 >ORDER NUMBER <strong>{{ i.ono }}</strong></h4>
+                <h4 >ORDER NUMBER <strong>{{ order.ono }}</strong></h4>
                 <select name="status" id="" class="badge bg-warning text-dark status" style="background-color: #FC8019;">
                     <option value="R">Received</option>
                     <option value="C">Cooking</option>
@@ -78,7 +78,7 @@
 
                 <div class="restro">
                     <p><strong>DATE</strong></p>
-                    <p>{{ i.date }}</p>
+                    <p>{{ order.date }}</p>
                     <p><strong>ADDRESS</strong></p>
                     <p>{{ address.1 }}, {{ address.2 }}, {{ address.3 }}</p>
                 </div>
@@ -89,7 +89,7 @@
                         {% for k in j %}
                     <p>{{ k.1 }}</p>
                     <p>{{ k.2 }}</p>
-                    <p>Qt. {{ i.quant }}</p>
+                    <p>Qt. {{ k.3 }}</p>
                     {% endfor %}
                     {% endfor %}
                    
@@ -100,7 +100,7 @@
 
             </div>
         </div>
-        {% endfor %}
+      
         <!-- <div class="col-md-8 order-box" >
 
             <div class="header">

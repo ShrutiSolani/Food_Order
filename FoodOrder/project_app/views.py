@@ -285,10 +285,12 @@ def myorders(request):
     # aftertax = total + (0.05*total)
     # delivery = aftertax + 5
     osummary = OrderSummary.objects.filter(uid = uid_save_item)
+    osummary = osummary[len(osummary) - 1]
+    print(osummary)
     jsonDec = json.decoder.JSONDecoder()
     itemidlist = []
-    for i in osummary:
-        itemidlist.append(jsonDec.decode(i.itemslist))
+   
+    itemidlist.append(jsonDec.decode(osummary.itemslist))
     # itemidlist  = jsonDec.decode(osummary.itemslist)
     print(itemidlist)
     # print(itemidlist[0])
@@ -316,19 +318,42 @@ def myorders(request):
     #             # )
     #             # print(x)
     #             # x['qt'] = q
-    #             itemdetails.append(itemd)
+    #             itemdetailes.append(itemd)
 
     restrodetails = []
-    for i in osummary:
-        y = Restaurant.objects.values_list('RestroName').get(RId = i.rid.RId)
-        print(y)
-        # y = RestroUser.objects.values_list('address1', 'address2', 'city').get(id = i.uid.id)
-        # y = RestroUser.objects.get(id = i.uid.id).only('address1', 'address2', 'city')
+    y = Restaurant.objects.values_list('RestroName').get(RId = osummary.rid.RId)
     restrodetails.append(y[0])
+    qtlist = []
+    for i in range(len(itemidlist)):
+        print('i', i)
+        for j in itemidlist[i]:
+            print('j',j)
+            print(type(j))
+            print(j[0])
+            x = Order.objects.values_list('quantity').get(itemId = j[0])
+            # print('x' , x)
+            x = list(x)
+            qtlist.append(x)
+            # print(itemidlist[i].index(j))
+            # print(type(int(itemidlist[i].index(j))))
+            # itemidlist[itemidlist[i].index(j)].append(x)
+    print(itemidlist)
+    print(qtlist)
+    k = 0
+    while k < len(qtlist):
+        print('k',k)
+        for i in itemidlist:
+            for j in i:
+                j.append(qtlist[k][0])
+                k += 1
+
+    print(itemidlist)
     # print(userdetails)
     # print(userdetails[0][0])
-    total = osummary[0].total 
-    after_tax = osummary[0].aftertax
+    # total = osummary[len(osummary) - 1].total 
+    # after_tax = osummary[len(osummary) - 1].aftertax
+    total = osummary.total
+    after_tax = osummary.aftertax
     return render(request, 'myorders2.html', {'order': osummary, 'restro': y[0], 'item':itemidlist, 'total':total, 'tax': after_tax})
     # return render(request, 'myorders.html', {'ono':ono,
     # 'order':order_details, 'item':itemidlist, 
@@ -358,10 +383,10 @@ def rorders(request):
     # delivery = aftertax + 5
 
     osummary = OrderSummary.objects.filter(rid = riD)
+    osummary = osummary[len(osummary) - 1]
     jsonDec = json.decoder.JSONDecoder()
     itemidlist = []
-    for i in osummary:
-        itemidlist.append(jsonDec.decode(i.itemslist))
+    itemidlist.append(jsonDec.decode(osummary.itemslist))
     # itemidlist  = jsonDec.decode(osummary[0].itemslist)
     print(itemidlist)
     print(itemidlist[0])
@@ -375,14 +400,41 @@ def rorders(request):
     #             itemdetails.append(x)
 
     userdetails = []
-    for i in osummary:
-        y = RestroUser.objects.values_list('address1', 'address2', 'city').get(id = i.uid.id)
+    y = RestroUser.objects.values_list('address1', 'address2', 'city').get(id = osummary.uid.id)
         # y = RestroUser.objects.get(id = i.uid.id).only('address1', 'address2', 'city')
-        userdetails.append(y)
+    userdetails.append(y)
     print(userdetails)
     print(userdetails[0][0])
-    total = osummary[0].total
-    after_tax = osummary[0].aftertax
+
+    qtlist = []
+    for i in range(len(itemidlist)):
+        print('i', i)
+        for j in itemidlist[i]:
+            print('j',j)
+            print(type(j))
+            print(j[0])
+            x = Order.objects.values_list('quantity').get(itemId = j[0])
+            # print('x' , x)
+            x = list(x)
+            qtlist.append(x)
+            # print(itemidlist[i].index(j))
+            # print(type(int(itemidlist[i].index(j))))
+            # itemidlist[itemidlist[i].index(j)].append(x)
+    print(itemidlist)
+    print(qtlist)
+    k = 0
+    while k < len(qtlist):
+        print('k',k)
+        for i in itemidlist:
+            for j in i:
+                j.append(qtlist[k][0])
+                k += 1
+
+    print(itemidlist)
+
+
+    total = osummary.total
+    after_tax = osummary.aftertax
     return render(request, 'rorders.html', {'order': osummary, 'item':itemidlist, 'address': {'1': userdetails[0][0], '2': userdetails[0][1], '3':userdetails[0][2] }, 'total':total, 'aftertax': after_tax})
     # return render(request, 'rorders.html', {'ono':ono,'order':order_details, 'item':itemidlist, 'address': userlist,'total':total,'tax':delivery})
 

@@ -383,7 +383,11 @@ def rorders(request):
     # delivery = aftertax + 5
 
     osummary = OrderSummary.objects.filter(rid = riD)
-    osummary = osummary[len(osummary) - 1]
+    print(osummary)
+    try:
+        osummary = osummary[len(osummary) - 1]
+    except:
+        pass
     jsonDec = json.decoder.JSONDecoder()
     itemidlist = []
     itemidlist.append(jsonDec.decode(osummary.itemslist))
